@@ -2,72 +2,67 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>IG Recon Terminal</title>
+  <title>IG Data Breach Panel</title>
   <style>
     body {
       background-color: #000;
       color: #0f0;
       font-family: monospace;
-      padding: 30px;
+      font-size: 20px;
+      padding: 40px;
     }
-
     #terminal, #formulario, #datos {
-      max-width: 800px;
+      max-width: 1000px;
       margin: auto;
       display: none;
     }
-
     #intro {
       text-align: center;
     }
-
     input, button {
       background: #111;
       color: #0f0;
       border: 1px solid #0f0;
-      padding: 10px;
-      margin: 10px 0;
-      width: 100%;
-    }
-
-    .fake-captcha {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      padding: 18px;
       margin: 15px 0;
-      justify-content: center;
+      width: 100%;
+      font-size: 20px;
     }
-
-    .fake-captcha input[type="checkbox"] {
-      transform: scale(1.3);
-    }
-
     .typing {
       border-right: .1em solid #0f0;
       white-space: pre-line;
       overflow: hidden;
+      font-size: 22px;
     }
-
     iframe {
       width: 100%;
       height: 600px;
       border: 2px solid #0f0;
       margin-top: 20px;
     }
+    .alerta {
+      color: red;
+      animation: parpadeo 1s infinite;
+      font-size: 32px;
+    }
+    @keyframes parpadeo {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
 
-  <div id="intro">
-    <h1>*** IG USER DATA RECON SYSTEM ***</h1>
-    <p>⚠️ Acceso clasificado: Solo personal autorizado ⚠️</p>
-    <h3>Contrato de Confidencialidad</h3>
-    <p>Al continuar aceptas no divulgar la información obtenida. Esta herramienta accede a datos protegidos y puede ser monitoreada por entidades internacionales.</p>
+  <!-- Sonidos -->
+  <audio id="teclado" src="https://www.soundjay.com/mechanical/sounds/keyboard-1.mp3"></audio>
+  <audio id="error" src="https://www.soundjay.com/button/beep-07.wav"></audio>
 
-    <div class="fake-captcha">
-      <input type="checkbox" id="captcha">
-      <label for="captcha">No soy un robot</label>
-    </div>
+  <div id="intro">
+    <h1 class="alerta">ACCESO CLASIFICADO</h1>
+    <p>Sistema de rastreo no autorizado - IG Data Recon Tool</p>
+    <h3>Contrato de Confidencialidad</h3>
+    <p>Al continuar, aceptas no divulgar los datos recopilados. Esta herramienta accede a información pública simulada como confidencial.</p>
     <button onclick="aceptarContrato()">Aceptar y Continuar</button>
   </div>
 
@@ -76,34 +71,29 @@
   </div>
 
   <div id="formulario">
-    <h2>Ingresar usuario de Instagram</h2>
+    <h2>Buscar usuario de Instagram</h2>
     <input type="text" id="username" placeholder="@usuario">
     <button onclick="mostrarDatos()">Iniciar rastreo</button>
   </div>
 
   <div id="datos">
-    <h3>Datos recopilados:</h3>
-    <p><strong>Fuente:</strong> Base de datos pública Meta / Mirrors no oficiales</p>
-    <p><strong>Resultado:</strong> Información pública extraída, confidencialmente procesada.</p>
+    <h3>Resultado del rastreo:</h3>
+    <p><strong>Fuente:</strong> Base espejo de Picnob</p>
+    <p><strong>Información pública convertida a clasificada</strong></p>
     <iframe id="visor"></iframe>
   </div>
 
   <script>
     function aceptarContrato() {
-      const captcha = document.getElementById("captcha");
-      if (!captcha.checked) {
-        alert("Debes aceptar el captcha para continuar.");
-        return;
-      }
-
       document.getElementById("intro").style.display = "none";
       document.getElementById("terminal").style.display = "block";
       animarTexto([
-        "Conectando con servidores de Meta...",
-        "Interceptando API pública...",
-        "Acceso autorizado...",
-        "Rastreo de actividad de usuarios activos...",
-        "Listo. Consola de búsqueda activa."
+        "Conectando a servidores centrales de Meta...",
+        "Interceptando señales cifradas...",
+        "Bypasseando firewalls de seguridad...",
+        "Descifrando tokens de acceso...",
+        "Conexión establecida con base de datos pública...",
+        "Sistema listo. Ingrese nombre de usuario para continuar."
       ], () => {
         document.getElementById("terminal").style.display = "none";
         document.getElementById("formulario").style.display = "block";
@@ -113,11 +103,13 @@
     function animarTexto(lineas, callback) {
       let i = 0;
       const animacion = document.getElementById("animacion");
+      const teclado = document.getElementById("teclado");
       function escribirLinea() {
         if (i < lineas.length) {
+          teclado.play();
           animacion.innerHTML += lineas[i] + "\n";
           i++;
-          setTimeout(escribirLinea, 1000);
+          setTimeout(escribirLinea, 1200);
         } else {
           setTimeout(callback, 1500);
         }
@@ -128,6 +120,7 @@
     function mostrarDatos() {
       const username = document.getElementById("username").value.trim().replace("@", "");
       if (username === "") {
+        document.getElementById("error").play();
         alert("Por favor, ingresa un nombre de usuario.");
         return;
       }
@@ -135,7 +128,6 @@
       document.getElementById("formulario").style.display = "none";
       document.getElementById("datos").style.display = "block";
 
-      // Usamos Picnob para extraer datos reales
       const iframe = document.getElementById("visor");
       iframe.src = "https://www.picnob.com/u/" + username;
     }
