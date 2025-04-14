@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Instagram Lookup</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #00ff99;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding: 50px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+    #results {
+      margin-top: 30px;
+      border: 1px solid #00ff99;
+      padding: 20px;
+      display: none;
+      background-color: #222;
+    }
+  </style>
+</head>
+<body>
+  <h1>Instagram Info Finder</h1>
+  <p>Ingresa un @usuario de Instagram:</p>
+  <input type="text" id="username" placeholder="@usuario">
+  <br>
+  <button onclick="showFakeResults()">Buscar</button>
+
+  <div id="results">
+    <h2>Resultados:</h2>
+    <p><strong>Correo:</strong> usuario123@gmail.com</p>
+    <p><strong>Ubicación:</strong> Buenos Aires, Argentina</p>
+    <p><strong>Edad:</strong> 23 años</p>
+    <p><strong>Última conexión:</strong> Hace 2 horas</p>
+  </div>
+
+  <script>
+    function showFakeResults() {
+      document.getElementById('results').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
