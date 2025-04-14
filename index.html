@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>IG Data Breach Panel</title>
+  <title>IG Breach Terminal</title>
   <style>
     body {
       background-color: #000;
       color: #0f0;
       font-family: monospace;
-      font-size: 20px;
+      font-size: 22px;
       padding: 40px;
     }
     #terminal, #formulario, #datos {
@@ -26,13 +26,12 @@
       padding: 18px;
       margin: 15px 0;
       width: 100%;
-      font-size: 20px;
+      font-size: 22px;
     }
     .typing {
       border-right: .1em solid #0f0;
       white-space: pre-line;
       overflow: hidden;
-      font-size: 22px;
     }
     iframe {
       width: 100%;
@@ -43,7 +42,7 @@
     .alerta {
       color: red;
       animation: parpadeo 1s infinite;
-      font-size: 32px;
+      font-size: 34px;
     }
     @keyframes parpadeo {
       0% { opacity: 1; }
@@ -52,17 +51,21 @@
     }
   </style>
 </head>
-<body>
+<body onclick="prepararSonidos()">
 
   <!-- Sonidos -->
-  <audio id="teclado" src="https://www.soundjay.com/mechanical/sounds/keyboard-1.mp3"></audio>
-  <audio id="error" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+  <audio id="teclado" preload="auto">
+    <source src="https://www.soundjay.com/mechanical/sounds/keyboard-1.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="error" preload="auto">
+    <source src="https://www.soundjay.com/button/beep-07.wav" type="audio/mpeg">
+  </audio>
 
   <div id="intro">
     <h1 class="alerta">ACCESO CLASIFICADO</h1>
-    <p>Sistema de rastreo no autorizado - IG Data Recon Tool</p>
+    <p>Herramienta de análisis y extracción de datos públicos de Instagram</p>
     <h3>Contrato de Confidencialidad</h3>
-    <p>Al continuar, aceptas no divulgar los datos recopilados. Esta herramienta accede a información pública simulada como confidencial.</p>
+    <p>El sistema simula acceso a información clasificada. Acepta para continuar.</p>
     <button onclick="aceptarContrato()">Aceptar y Continuar</button>
   </div>
 
@@ -78,22 +81,33 @@
 
   <div id="datos">
     <h3>Resultado del rastreo:</h3>
-    <p><strong>Fuente:</strong> Base espejo de Picnob</p>
-    <p><strong>Información pública convertida a clasificada</strong></p>
+    <p><strong>IP simulada:</strong> 192.168.13.37</p>
+    <p><strong>Ubicación:</strong> Los Angeles, California, USA</p>
+    <p><strong>Servidor espejo:</strong> imginn.com</p>
+    <p><strong>Estado:</strong> Datos públicos obtenidos con éxito</p>
     <iframe id="visor"></iframe>
   </div>
 
   <script>
+    let teclado, error;
+
+    function prepararSonidos() {
+      teclado = document.getElementById("teclado");
+      error = document.getElementById("error");
+      teclado.volume = 0.5;
+      error.volume = 0.5;
+    }
+
     function aceptarContrato() {
       document.getElementById("intro").style.display = "none";
       document.getElementById("terminal").style.display = "block";
       animarTexto([
-        "Conectando a servidores centrales de Meta...",
-        "Interceptando señales cifradas...",
-        "Bypasseando firewalls de seguridad...",
-        "Descifrando tokens de acceso...",
-        "Conexión establecida con base de datos pública...",
-        "Sistema listo. Ingrese nombre de usuario para continuar."
+        "Estableciendo conexión segura con servidores Meta...",
+        "Inyectando payload para eludir autenticación...",
+        "Simulando acceso root en sistemas IG...",
+        "Descargando metadatos del usuario...",
+        "Cargando base de datos espejo (imginn.com)...",
+        "Esperando entrada de objetivo..."
       ], () => {
         document.getElementById("terminal").style.display = "none";
         document.getElementById("formulario").style.display = "block";
@@ -103,13 +117,12 @@
     function animarTexto(lineas, callback) {
       let i = 0;
       const animacion = document.getElementById("animacion");
-      const teclado = document.getElementById("teclado");
       function escribirLinea() {
         if (i < lineas.length) {
           teclado.play();
           animacion.innerHTML += lineas[i] + "\n";
           i++;
-          setTimeout(escribirLinea, 1200);
+          setTimeout(escribirLinea, 1000);
         } else {
           setTimeout(callback, 1500);
         }
@@ -120,7 +133,7 @@
     function mostrarDatos() {
       const username = document.getElementById("username").value.trim().replace("@", "");
       if (username === "") {
-        document.getElementById("error").play();
+        error.play();
         alert("Por favor, ingresa un nombre de usuario.");
         return;
       }
@@ -129,7 +142,7 @@
       document.getElementById("datos").style.display = "block";
 
       const iframe = document.getElementById("visor");
-      iframe.src = "https://www.picnob.com/u/" + username;
+      iframe.src = "https://imginn.com/instagram/" + username + "/";
     }
   </script>
 
